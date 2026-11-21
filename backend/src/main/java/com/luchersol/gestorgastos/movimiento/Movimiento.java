@@ -1,18 +1,26 @@
-package com.luchersol.gestorgastos.shared.base;
+package com.luchersol.gestorgastos.movimiento;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.luchersol.gestorgastos.categoria.Categoria;
+import com.luchersol.gestorgastos.shared.base.BaseEntity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
+import lombok.Setter;
 
-@MappedSuperclass 
-public abstract class Movimiento extends BaseEntity{
+@Getter 
+@Setter 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Movimiento extends BaseEntity {
 
     @Column (nullable = false)
     private String concepto;

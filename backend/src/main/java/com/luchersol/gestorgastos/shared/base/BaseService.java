@@ -16,6 +16,10 @@ public abstract class BaseService<R extends JpaRepository<E,Long> ,E> {
         return repository.save(entity);
     }
 
+    public List<E> guardar(Iterable<E> entity) {
+        return repository.saveAll(entity);
+    }
+
     public List<E> obtenerTodos() {
         return repository.findAll();
     }

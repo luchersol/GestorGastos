@@ -1,0 +1,56 @@
+
+:root {
+    /* Colores principales */
+    --color-primary: #5369D8;
+    --color-primary-hover: #4358C5;
+
+    --color-income: #239B70;
+    --color-expense: #D65B61;
+
+    --color-primary-light: #E9ECFC;
+    --color-income-light: #E5F5EE;
+    --color-expense-light: #FBEAEC;
+    
+    /* Superficies */
+    --color-background: #F5F6FA;
+    --color-surface: #FFFFFF;
+    --color-sidebar: #FFFFFF;
+
+    /* Textos */
+    --color-text: #20283A;
+    --color-text-secondary: #778096;
+    --color-text-muted: #A0A7B5;
+
+    /* Bordes */
+    --color-border: #E5E8EF;
+
+    /* Tipografía */
+    --font-family: Inter, system-ui, sans-serif;
+
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.5rem;
+
+    /* Espaciado */
+    --spacing-1: 4px;
+    --spacing-2: 8px;
+    --spacing-3: 12px;
+    --spacing-4: 16px;
+    --spacing-5: 24px;
+    --spacing-6: 32px;
+
+    /* Bordes */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+
+    /* Sombras */
+    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-modal: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+    /* Dimensiones */
+    --sidebar-width: 240px;
+    --header-height: 64px;
+}

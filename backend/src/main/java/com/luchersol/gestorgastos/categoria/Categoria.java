@@ -8,6 +8,8 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity 
 @Table (
@@ -16,6 +18,8 @@ import jakarta.persistence.UniqueConstraint;
         @UniqueConstraint(columnNames = {"nombre", "tipo"})
     }
 )
+@Getter 
+@Setter 
 public class Categoria extends BaseEntity {
 
     @Column(nullable = false)

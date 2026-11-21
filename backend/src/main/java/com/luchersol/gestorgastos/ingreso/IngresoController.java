@@ -3,12 +3,14 @@ package com.luchersol.gestorgastos.ingreso;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.RequiredArgsConstructor;
+import com.luchersol.gestorgastos.shared.base.BaseController;
 
 @RestController 
 @RequestMapping("/api/ingresos")
-@RequiredArgsConstructor 
-public class IngresoController {
+public class IngresoController extends BaseController<IngresoService, Ingreso> {
+
+    protected IngresoController(IngresoService service) {
+        super(service);
+    }
     
-    private final IngresoService service;
 }
