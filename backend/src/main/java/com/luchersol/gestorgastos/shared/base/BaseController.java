@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,13 +21,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.luchersol.gestorgastos.shared.mapper.CsvService;
 
 
-public abstract class BaseController<S extends BaseService<?, T>, T> {
+public abstract class BaseController<
+        S extends BaseService<?, T>, 
+        T extends BaseEntity> {
 
     protected final S service;
     protected final Class<T> entityType;
 
     @Autowired 
-    private CsvService csvService;
+    protected CsvService csvService;
 
     @SuppressWarnings("unchecked")
     protected BaseController(S service) {
@@ -41,6 +44,11 @@ public abstract class BaseController<S extends BaseService<?, T>, T> {
     @PostMapping
     public ResponseEntity<T> guardar(@RequestBody T entity) {
         return ResponseEntity.ok(service.guardar(entity));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<T> actualizar(@PathVariable Long id, @RequestBody T entity) {
+        return ResponseEntity.ok(service.actualizar(id, entity));
     }
 
     @GetMapping

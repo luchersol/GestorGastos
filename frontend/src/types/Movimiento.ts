@@ -8,6 +8,7 @@ export interface Movimiento {
     concepto: string;
     fecha: string;
     tipo: TipoMovimiento;
-    categoria: Categoria;
+    categoriaId: number;
+    categoria?: Categoria;
     observaciones?: string;
 }

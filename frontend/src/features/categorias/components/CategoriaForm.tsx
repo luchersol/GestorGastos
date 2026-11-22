@@ -1,14 +1,11 @@
-
 import { useEffect, useState } from "react";
-import type { FormEvent } from "react";
 import type { Categoria } from "../../../types/Categoria";
 import type { TipoMovimiento } from "../../../types/Movimiento";
 
-interface Props {
-    categoria?: Categoria | null;
-    onGuardar: (
-        datos: Omit<Categoria, "id">
-    ) => void;
+
+interface CategoriaFormProps {
+    categoria: Categoria | null;
+    onGuardar: (datos: Omit<Categoria, "id">) => void | Promise<void>;
     onCancelar: () => void;
 }
 
@@ -16,7 +13,7 @@ function CategoriaForm({
     categoria,
     onGuardar,
     onCancelar
-}: Props) {
+}: CategoriaFormProps) {
     const [nombre, setNombre] = useState("");
     const [color, setColor] = useState("#5369D8");
     const [tipo, setTipo] = useState<TipoMovimiento>("GASTO");
@@ -27,18 +24,16 @@ function CategoriaForm({
         setTipo(categoria?.tipo ?? "GASTO");
     }, [categoria]);
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleSubmit = (event: React.SubmitEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
-        if (!nombre.trim()) {
-            return;
-        }
-
-        onGuardar({
-            nombre: nombre.trim(),
+        const datos: Omit<Categoria, "id"> = {
+            nombre,
             color,
             tipo
-        });
+        };
+
+        onGuardar(datos);
     };
 
     return (

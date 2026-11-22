@@ -32,9 +32,21 @@ public class Categoria extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TipoCategoria tipo;
+    private TipoMovimiento tipo;
 
     @Column(nullable = false)
     private Boolean activa = true;
+
+    @Override
+    protected <T> void actualizar(T otro) {
+        if(otro instanceof Categoria) {
+            Categoria nuevoDato = (Categoria) otro;
+            this.nombre = nuevoDato.nombre;
+            this.descripcion = nuevoDato.descripcion;
+            this.color = nuevoDato.color;
+            // El tipo de una categoría debe ser inmodificable
+            this.activa = nuevoDato.activa; 
+        }
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.luchersol.gestorgastos.gasto;
 
+import com.luchersol.gestorgastos.ingreso.Ingreso;
 import com.luchersol.gestorgastos.movimiento.Movimiento;
 
 import jakarta.persistence.Entity;

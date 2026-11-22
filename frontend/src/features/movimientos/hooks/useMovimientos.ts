@@ -89,7 +89,7 @@ export function useMovimientos() {
     };
 
     return {
-        movimientos: movimientosFiltrados,
+        movimientos,
         filtros,
         cargando,
         error,

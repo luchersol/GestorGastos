@@ -1,5 +1,5 @@
 package com.luchersol.gestorgastos.categoria;
 
-public enum TipoCategoria {
+public enum TipoMovimiento {
     GASTO, INGRESO;
 }

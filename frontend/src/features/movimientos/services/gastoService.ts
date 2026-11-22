@@ -14,7 +14,7 @@ const gastoService = {
     },
 
     async crear(gasto: Omit<Gasto, "id">): Promise<Gasto> {
-        const respuesta = await api.post<Gasto>("/gastos", gasto);
+        const respuesta = await api.post<Gasto>("/gastos/dto", gasto);
         return respuesta.data;
     },
 
@@ -25,6 +25,24 @@ const gastoService = {
 
     async eliminar(id: number): Promise<void> {
         await api.delete(`/gastos/${id}`);
+    },
+
+    async exportar(): Promise<Blob> {
+        const respuesta = await api.get("/gastos/exportar", {
+            params: {
+                nombre: "gastos.csv"
+            },
+            responseType: "blob"
+        });
+
+        return respuesta.data;
+    },
+
+    async importar(file: File): Promise<void> {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        await api.post("/gastos/importar", formData);
     }
 };
 

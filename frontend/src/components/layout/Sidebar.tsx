@@ -4,7 +4,8 @@ import {
     LayoutDashboard,
     ArrowLeftRight,
     ChartNoAxesCombined,
-    Tags
+    Tags,
+    FileSpreadsheet
 } from "lucide-react";
 
 const navigation = [
@@ -27,6 +28,11 @@ const navigation = [
         label: "Categorías",
         path: "/categorias",
         icon: Tags
+    },
+    {
+        label: "Importa / Exportar",
+        path: "/importacion-exportacion",
+        icon: FileSpreadsheet
     }
 ];
 

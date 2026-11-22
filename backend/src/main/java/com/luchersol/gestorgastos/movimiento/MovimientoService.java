@@ -6,9 +6,9 @@ import com.luchersol.gestorgastos.shared.base.BaseService;
 
 
 @Service 
-public class MovimientoService extends BaseService<MovimientoRepository<Movimiento>, Movimiento> {
+public class MovimientoService extends BaseService<MovimientoRepository, Movimiento> {
 
-    public MovimientoService(MovimientoRepository<Movimiento> repository) {
+    public MovimientoService(MovimientoRepository repository) {
         super(repository);
     }
     

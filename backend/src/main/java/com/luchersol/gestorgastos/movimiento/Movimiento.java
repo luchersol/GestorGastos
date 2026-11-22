@@ -3,7 +3,11 @@ package com.luchersol.gestorgastos.movimiento;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.luchersol.gestorgastos.categoria.Categoria;
+import com.luchersol.gestorgastos.gasto.Gasto;
+import com.luchersol.gestorgastos.ingreso.Ingreso;
+import com.luchersol.gestorgastos.shared.base.Actualizable;
 import com.luchersol.gestorgastos.shared.base.BaseEntity;
 
 import jakarta.persistence.Column;
@@ -22,19 +26,36 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Movimiento extends BaseEntity {
 
-    @Column (nullable = false)
-    private String concepto;
+    @Column (nullable = false) 
+    protected String concepto;
 
     @Column(nullable = false, precision = 12, scale = 2)
-    private BigDecimal importe;
+    protected BigDecimal importe;
 
     @Column(nullable = false)
-    private LocalDate fecha;
+    protected LocalDate fecha;
 
-    private String descripcion;
+    protected String descripcion;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_id", nullable = false)
-    private Categoria categoria;
+    protected Categoria categoria;
+
+     @Override
+    protected <T> void actualizar(T otro) {
+        Movimiento nuevoDato;
+        if(otro instanceof Gasto) {
+            nuevoDato = (Gasto) otro;
+        } else if(otro instanceof Ingreso) {
+            nuevoDato = (Ingreso) otro;
+        } else {
+            nuevoDato = (Movimiento) otro;
+        }
+        this.categoria = nuevoDato.getCategoria();
+        this.concepto = nuevoDato.getConcepto();
+        this.descripcion = nuevoDato.getDescripcion();
+        this.fecha = nuevoDato.getFecha();
+        this.importe = nuevoDato.getImporte();
+    }
 
 }

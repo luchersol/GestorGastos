@@ -1,16 +1,46 @@
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import type { Categoria } from "../../../types/Categoria";
+
+import categoriaService from "../services/categoriaService";
 
 import CategoriaList from "../components/CategoriaList";
 import CategoriaForm from "../components/CategoriaForm";
 
 function CategoriasPage() {
+
     const [categorias, setCategorias] = useState<Categoria[]>([]);
+
     const [categoriaEditar, setCategoriaEditar] =
         useState<Categoria | null>(null);
+
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
+
+    const [cargando, setCargando] = useState(true);
+    const [error, setError] = useState("");
+
+    // Cargar categorías desde el backend
+    const cargarCategorias = async () => {
+
+        try {
+            setCargando(true);
+            setError("");
+
+            const datos = await categoriaService.obtenerTodas();
+            console.log(datos)
+            setCategorias(datos);
+
+        } catch (error) {
+            console.error("Error al obtener categorías:", error);
+            setError("No se han podido cargar las categorías.");
+        } finally {
+            setCargando(false);
+        }
+    };
+
+    useEffect(() => {
+        cargarCategorias();
+    }, []);
 
     const abrirFormulario = (categoria?: Categoria) => {
         setCategoriaEditar(categoria ?? null);
@@ -22,44 +52,53 @@ function CategoriasPage() {
         setCategoriaEditar(null);
     };
 
-    const guardarCategoria = (datos: Omit<Categoria, "id">) => {
-        if (categoriaEditar) {
-            setCategorias((actuales) =>
-                actuales.map((categoria) =>
-                    categoria.id === categoriaEditar.id
-                        ? { ...datos, id: categoria.id }
-                        : categoria
-                )
-            );
-        } else {
-            const nuevaCategoria: Categoria = {
-                ...datos,
-                id: Date.now()
-            };
+    // Crear o actualizar categoría
+    const guardarCategoria = async (datos: Omit<Categoria, "id">) => {
 
-            setCategorias((actuales) => [
-                ...actuales,
-                nuevaCategoria
-            ]);
+        try {
+
+            if (categoriaEditar) {
+                await categoriaService.actualizar(
+                    categoriaEditar.id,
+                    datos
+                );
+            } else {
+                await categoriaService.crear(datos);
+            }
+
+            cerrarFormulario();
+
+            await cargarCategorias();
+
+        } catch (error) {
+            console.error("Error al guardar categoría:", error);
+            throw error;
         }
-
-        cerrarFormulario();
     };
 
-    const eliminarCategoria = (id: number) => {
+    // Eliminar categoría
+    const eliminarCategoria = async (id: number) => {
+
         const confirmar = window.confirm(
             "¿Quieres eliminar esta categoría?"
         );
 
         if (!confirmar) return;
 
-        setCategorias((actuales) =>
-            actuales.filter((categoria) => categoria.id !== id)
-        );
+        try {
+            await categoriaService.eliminar(id);
+
+            await cargarCategorias();
+
+        } catch (error) {
+            console.error("Error al eliminar categoría:", error);
+            setError("No se ha podido eliminar la categoría.");
+        }
     };
 
     return (
         <section className="page">
+
             <div className="page-heading">
                 <div>
                     <h1>Categorías</h1>
@@ -76,6 +115,7 @@ function CategoriasPage() {
 
             {mostrarFormulario && (
                 <section className="content-card">
+
                     <h2>
                         {categoriaEditar
                             ? "Editar categoría"
@@ -87,18 +127,28 @@ function CategoriasPage() {
                         onGuardar={guardarCategoria}
                         onCancelar={cerrarFormulario}
                     />
+
                 </section>
             )}
 
             <section className="content-card">
+
                 <h2>Tus categorías</h2>
 
-                <CategoriaList
-                    categorias={categorias}
-                    onEditar={abrirFormulario}
-                    onEliminar={eliminarCategoria}
-                />
+                {cargando ? (
+                    <p>Cargando categorías...</p>
+                ) : error ? (
+                    <p className="form-error">{error}</p>
+                ) : (
+                    <CategoriaList
+                        categorias={categorias}
+                        onEditar={abrirFormulario}
+                        onEliminar={eliminarCategoria}
+                    />
+                )}
+
             </section>
+
         </section>
     );
 }

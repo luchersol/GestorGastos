@@ -6,15 +6,32 @@ interface Props {
     movimientos: Movimiento[];
     cargando: boolean;
     error: string | null;
+    onEditar: (movimiento: Movimiento) => void;
+    onEliminar: (movimiento: Movimiento) => void;
 }
 
-function MovimientoList({ movimientos, cargando, error }: Props) {
+function MovimientoList({
+    movimientos,
+    cargando,
+    error,
+    onEditar,
+    onEliminar
+}: Props) {
+
     if (cargando) {
-        return <p className="empty-message">Cargando movimientos...</p>;
+        return (
+            <p className="empty-message">
+                Cargando movimientos...
+            </p>
+        );
     }
 
     if (error) {
-        return <p className="error-message">{error}</p>;
+        return (
+            <p className="error-message">
+                {error}
+            </p>
+        );
     }
 
     if (movimientos.length === 0) {
@@ -27,12 +44,16 @@ function MovimientoList({ movimientos, cargando, error }: Props) {
 
     return (
         <div className="movement-list">
-            {movimientos.map((movimiento) => (
+
+            {movimientos.map(movimiento => (
                 <MovimientoItem
                     key={`${movimiento.tipo}-${movimiento.id}`}
                     movimiento={movimiento}
+                    onEditar={() => onEditar(movimiento)}
+                    onEliminar={() => onEliminar(movimiento)}
                 />
             ))}
+
         </div>
     );
 }
