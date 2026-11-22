@@ -41,7 +41,7 @@ public abstract class Movimiento extends BaseEntity {
     @JoinColumn(name = "categoria_id", nullable = false)
     protected Categoria categoria;
 
-     @Override
+    @Override
     protected <T> void actualizar(T otro) {
         Movimiento nuevoDato;
         if(otro instanceof Gasto) {

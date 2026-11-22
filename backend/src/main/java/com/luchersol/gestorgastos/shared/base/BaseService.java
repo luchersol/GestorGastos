@@ -1,10 +1,15 @@
 package com.luchersol.gestorgastos.shared.base;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.luchersol.gestorgastos.shared.exception.ResourceNotFoundException;
+import com.luchersol.gestorgastos.shared.mapper.CsvService;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +20,16 @@ public abstract class BaseService<
         E extends BaseEntity>{
     
     protected final R repository;
+    protected final Class<E> entityType;
+
+    @SuppressWarnings("unchecked")
+    protected BaseService(R repository) {
+        this.repository = repository;
+        this.entityType = (Class<E>) (
+            (ParameterizedType) getClass()
+                .getGenericSuperclass()
+        ).getActualTypeArguments()[1];
+    }
 
     @Transactional(readOnly = true)
     public List<E> obtenerTodos() {
@@ -22,8 +37,11 @@ public abstract class BaseService<
     }
 
     @Transactional(readOnly = true)
-    public Optional<E> obtenerPorId(Long id) {
-        return repository.findById(id);
+    public E obtenerPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                    "%s con id %d no encontrada".formatted(this.entityType, id)
+                ));
     }
 
     @Transactional 

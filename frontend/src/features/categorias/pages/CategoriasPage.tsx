@@ -26,7 +26,7 @@ function CategoriasPage() {
             setCargando(true);
             setError("");
 
-            const datos = await categoriaService.obtenerTodas();
+            const datos = await categoriaService.obtenerTodos();
             console.log(datos)
             setCategorias(datos);
 

@@ -61,7 +61,7 @@ function MovimientoForm({
                 setCargandoCategorias(true);
                 setErrorCategorias("");
 
-                const datos = await categoriaService.obtenerTodas();
+                const datos = await categoriaService.obtenerTodos();
 
                 const disponibles = datos.filter(
                     categoria => categoria.tipo === tipo

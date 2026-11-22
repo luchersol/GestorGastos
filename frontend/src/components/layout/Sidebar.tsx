@@ -5,7 +5,8 @@ import {
     ArrowLeftRight,
     ChartNoAxesCombined,
     Tags,
-    FileSpreadsheet
+    FileSpreadsheet,
+    DatabaseBackup 
 } from "lucide-react";
 
 const navigation = [
@@ -33,6 +34,11 @@ const navigation = [
         label: "Importa / Exportar",
         path: "/importacion-exportacion",
         icon: FileSpreadsheet
+    },
+    {
+        label: "Copias de seguridad",
+        path: "/backups",
+        icon: DatabaseBackup 
     }
 ];
 

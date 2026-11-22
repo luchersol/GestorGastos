@@ -1,3 +1,4 @@
+
 package com.luchersol.gestorgastos.shared.mapper;
 
 import java.io.IOException;
@@ -19,29 +20,27 @@ public class CsvService {
     public CsvService() {
         this.mapper = new CsvMapper();
         mapper.registerModule(new JavaTimeModule());
+
         mapper.disable(
-            SerializationFeature.WRITE_DATES_AS_TIMESTAMPS
-        );
+                SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
-    public <T> String toCsv(List<T> objects, Class<T> type) throws IOException {
+    public <T> String toCsv(List<T> objects, Class<T> type)
+            throws IOException {
 
-        CsvSchema schema = mapper.schemaFor(type)
-                .withHeader()
-                .withColumnSeparator(';');
+        CsvSchema schema = crearSchema(type);
 
         return mapper.writer(schema)
                 .writeValueAsString(objects);
     }
 
     public <T> List<T> fromCsv(String csv, Class<T> type)
-            throws IOException {
+        throws IOException {
 
-        CsvSchema schema = mapper.schemaFor(type)
-                .withHeader()
-                .withColumnSeparator(';');
+        CsvSchema schema = CsvSchema.emptySchema()
+                .withColumnSeparator(';')
+                .withHeader();
 
-        // Eliminar BOM si existe.
         if (csv.startsWith("\uFEFF")) {
             csv = csv.substring(1);
         }
@@ -52,5 +51,19 @@ public class CsvService {
                 .readValues(csv);
 
         return iterator.readAll();
+    }
+
+    private CsvSchema crearSchema(Class<?> type) {
+
+        CsvSchema.Builder builder = CsvSchema.builder()
+                .setColumnSeparator(';');
+
+        mapper.schemaFor(type).forEach(column -> {
+            if (!column.getName().equals("id")) {
+                builder.addColumn(column.getName());
+            }
+        });
+
+        return builder.build().withHeader();
     }
 }

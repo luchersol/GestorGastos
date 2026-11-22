@@ -29,12 +29,18 @@ public class GlobalExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
+    @ExceptionHandler(BackupException.class)
+    public ResponseEntity<ErrorResponse> handleBackup(BackupException ex, HttpServletRequest request) {
+        return buildResponse(ex, HttpStatus.BAD_REQUEST, request);
+    }
+
     private ResponseEntity<ErrorResponse> buildResponse(
             Exception ex, HttpStatus status,
             HttpServletRequest request) {
 
         return buildResponse(ex.getMessage(), status, request);
     }
+
 
     private ResponseEntity<ErrorResponse> buildResponse(
             String message, HttpStatus status,
@@ -49,4 +55,6 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(status).body(error);
     }
+
+
 }

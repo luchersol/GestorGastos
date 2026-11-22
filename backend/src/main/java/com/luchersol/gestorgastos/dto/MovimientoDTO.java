@@ -1,4 +1,4 @@
-package com.luchersol.gestorgastos.movimiento;
+package com.luchersol.gestorgastos.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 
 import com.luchersol.gestorgastos.gasto.Gasto;
 import com.luchersol.gestorgastos.ingreso.Ingreso;
+import com.luchersol.gestorgastos.movimiento.Movimiento;
 
 import lombok.Getter;
 import lombok.Setter;

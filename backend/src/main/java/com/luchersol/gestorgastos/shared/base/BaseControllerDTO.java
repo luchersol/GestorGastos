@@ -2,7 +2,10 @@ package com.luchersol.gestorgastos.shared.base;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import com.luchersol.gestorgastos.categoria.Categoria;
 
 
 public abstract class BaseControllerDTO<
@@ -16,9 +19,16 @@ public abstract class BaseControllerDTO<
 
     @PostMapping("/dto")
     public ResponseEntity<T> guardarDTO(@RequestBody D dto) {
-        T entity = convertir(dto);
+        T entity = convertirToSave(dto);
         return ResponseEntity.ok(service.guardar(entity));
     }
 
-    protected abstract T convertir(D dto);
+    @PutMapping("/dto")
+    public ResponseEntity<Void> actualizarDTO(@RequestBody D dto) {
+
+        return ResponseEntity.ok().build();
+    }
+
+    protected abstract T convertirToSave(D dto);
+    protected abstract T convertirToUpdate(Long id, D dto);
 }

@@ -2,6 +2,10 @@ package com.luchersol.gestorgastos.categoria;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +35,10 @@ public class CategoriaService extends BaseService<CategoriaRepository, Categoria
         List<Categoria> categorias = super.obtenerTodos();
         categorias.sort(Comparator.comparing(Categoria::getTipo).thenComparing(Categoria::getNombre));
         return categorias;
+    }
+
+    public Map<String, Categoria> obtenerClasificadoPorNombre() {
+        return super.obtenerTodos().stream().collect(Collectors.toMap(Categoria::getNombre, Function.identity()));
     }
     
     @Override 
@@ -71,6 +79,27 @@ public class CategoriaService extends BaseService<CategoriaRepository, Categoria
         }
 
         repository.delete(categoria);
+    }
+
+    @Override
+    @Transactional
+    public List<Categoria> guardar(Iterable<Categoria> entity) {
+        List<Categoria> categorias = StreamSupport.stream(entity.spliterator(), false)
+                .filter(c -> !c.getNombre().equalsIgnoreCase("Otros Gastos"))
+                .filter(c -> !c.getNombre().equalsIgnoreCase("Otros Ingresos"))
+                .toList();
+
+        return super.guardar(categorias);
+    }
+
+    @Override
+    public Categoria guardar(Categoria entity) {
+        String nombre = entity.getNombre();
+        if(nombre.equalsIgnoreCase("Otros Gastos") 
+            || nombre.equalsIgnoreCase("Otros Ingresos")) {
+            return null;
+        }
+        return super.guardar(entity);
     }
 
 }

@@ -1,0 +1,363 @@
+
+.backup-page {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.backup-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.backup-actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* RESUMEN */
+
+.backup-summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.backup-summary-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 22px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--card-background);
+}
+
+.backup-summary-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    background: var(--background-secondary);
+    color: var(--primary-color);
+}
+
+.backup-summary-card div:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.backup-summary-card span {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.backup-summary-card strong {
+    font-size: 21px;
+}
+
+/* SECCIÓN */
+
+.backup-section {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.backup-section-header h2 {
+    margin: 0 0 6px;
+}
+
+.backup-section-header p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* LISTADO */
+
+.backup-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.backup-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--card-background);
+    transition: border-color 0.2s ease;
+}
+
+.backup-item:hover {
+    border-color: var(--primary-color);
+}
+
+.backup-item-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+}
+
+.backup-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--background-secondary);
+    color: var(--primary-color);
+}
+
+.backup-item-details {
+    min-width: 0;
+}
+
+.backup-item-details h3 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.backup-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.backup-metadata span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.backup-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+/* ESTADOS */
+
+.backup-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.backup-valid {
+    color: #15803d;
+    background: rgba(34, 197, 94, 0.12);
+}
+
+.backup-invalid {
+    color: #dc2626;
+    background: rgba(239, 68, 68, 0.12);
+}
+
+/* BOTONES DE ICONOS */
+
+.backup-icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.backup-icon-button:hover:not(:disabled) {
+    background: var(--background-secondary);
+}
+
+.backup-icon-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.backup-delete-button:hover:not(:disabled) {
+    color: #dc2626;
+    border-color: #dc2626;
+}
+
+/* VACÍO Y CARGA */
+
+.backup-empty,
+.backup-loading {
+    padding: 40px 20px;
+    border: 1px dashed var(--border-color);
+    border-radius: 12px;
+    text-align: center;
+    color: var(--text-secondary);
+}
+
+.backup-empty h3 {
+    margin: 0 0 8px;
+    color: var(--text-color);
+}
+
+.backup-empty p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* ANIMACIÓN */
+
+.backup-spin {
+    animation: backup-rotation 1s linear infinite;
+}
+
+@keyframes backup-rotation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+    .backup-page .page-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .backup-actions {
+        width: 100%;
+    }
+
+    .backup-actions button {
+        flex: 1;
+    }
+
+    .backup-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .backup-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .backup-item-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .backup-metadata {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .backup-item-info {
+        align-items: flex-start;
+    }
+}
+
+
+/* Agrupación de backups */
+
+.backup-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.backup-group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.backup-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.backup-group-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.backup-group-header p {
+    margin: 5px 0 0;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.backup-group-count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30px;
+    height: 30px;
+    padding: 0 8px;
+    border-radius: 20px;
+    background: var(--background-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.backup-group-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.backup-group-empty {
+    margin: 0;
+    padding: 18px;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.backup-type {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 9px;
+    border-radius: 12px;
+    background: var(--background-secondary);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+}

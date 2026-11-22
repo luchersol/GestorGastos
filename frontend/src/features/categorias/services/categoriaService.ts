@@ -3,7 +3,7 @@ import type { Categoria } from "../../../types/Categoria";
 
 const categoriaService = {
 
-    async obtenerTodas(): Promise<Categoria[]> {
+    async obtenerTodos(): Promise<Categoria[]> {
         const respuesta = await api.get<Categoria[]>("/categorias");
         return respuesta.data;
     },

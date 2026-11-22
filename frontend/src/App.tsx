@@ -7,6 +7,7 @@ import MovimientosPage from "./features/movimientos/pages/MovimientosPage";
 import EstadisticasPage from "./features/estadisticas/pages/EstadisticasPage";
 import CategoriasPage from "./features/categorias/pages/CategoriasPage";
 import ImportacionExportacionPage from "./features/importacion-exportacion/pages/ImportacionExportacionPage";
+import BackupPage from "./features/backups/pages/BackupPage";
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/estadisticas" element={<EstadisticasPage />} />
                 <Route path="/categorias" element={<CategoriasPage />} />
                 <Route path="/importacion-exportacion" element={<ImportacionExportacionPage />} />
+                <Route path="/backups" element={<BackupPage />} />
             </Route>
 
             <Route path="*" element={<Navigate to="/" replace />} />

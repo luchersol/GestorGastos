@@ -58,9 +58,7 @@ public abstract class BaseController<
 
     @GetMapping ("/{id}")
     public ResponseEntity<T> obtenerPorId(@PathVariable Long id) {
-        return service.obtenerPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(service.obtenerPorId(id));
     }
 
     @DeleteMapping("/{id}")
